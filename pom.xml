@@ -1,0 +1,73 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <!-- 父模块依赖 -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.3.7</version>
+    <relativePath/>
+  </parent>
+  <!-- 父模块信息 -->
+  <groupId>cn.lulucar</groupId>
+  <artifactId>spring-test</artifactId>
+  <version>1.0.0</version>
+  <name>spring-test</name>
+  <!-- 父模块必须打包模式必须设置成 pom -->
+  <packaging>pom</packaging>
+  <!-- 子模块列表 -->
+  <modules>
+    <module>spring-batch</module>
+  </modules>
+  <!-- 指定各个依赖版本 -->
+  <properties>
+    <spring.boot.version>3.3.7</spring.boot.version>
+    <lombok.version>1.18.26</lombok.version>
+    <mysql.version>8.0.33</mysql.version>
+  </properties>
+  <!-- 统一管理依赖版本 -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+        <version>${spring.boot.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <version>${spring.boot.version}</version>
+      </dependency>
+      
+      <!-- <dependency> -->
+      <!--   <groupId>com.mysql</groupId> -->
+      <!--   <artifactId>mysql-connector-j</artifactId> -->
+      <!--   <version>${mysql.version}</version> -->
+      <!-- </dependency> -->
+      
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+        <version>${spring.boot.version}</version>
+      </dependency>
+      
+    </dependencies>
+  </dependencyManagement>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        
+      </plugin>
+    </plugins>
+  </build>
+</project>
