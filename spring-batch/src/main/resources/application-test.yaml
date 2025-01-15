@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: spring-batch
+  
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: true
+  #初始化的schema脚本位置(多个脚本的时候可以用逗号隔开位置、第二个脚本位置是创建person表)
+  sql:
+    init:
+      schema-locations:
+        classpath:/org/springframework/batch/core/schema-h2.sql
+      #初始化脚本模式(首次初始化之后改为never)
+      mode:
+        always
+  #启动时在上下文中执行所有Spring Batch作业(默认时是true)
+  batch:
+    job:
+      enabled: true
+    jdbc:
+      initialize-schema: always
+      
+  
