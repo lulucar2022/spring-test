@@ -2,9 +2,7 @@ package cn.lulucar.springbatch.config;
 
 import cn.lulucar.springbatch.dao.PersonRepository;
 import cn.lulucar.springbatch.entity.Person;
-import cn.lulucar.springbatch.job.processor.PersonItemProcessor;
 import cn.lulucar.springbatch.job.reader.PersonItemReader;
-import cn.lulucar.springbatch.job.writer.FileItemWriter;
 import cn.lulucar.springbatch.job.writer.PersonItemWriter;
 import cn.lulucar.springbatch.listener.JobListener;
 import lombok.extern.slf4j.Slf4j;
@@ -16,11 +14,10 @@ import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.task.TaskExecutor;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
 /**
@@ -46,8 +43,8 @@ public class HelloBatchConfiguration {
     
     @Bean
     public Step step1(JobRepository jobRepository, PlatformTransactionManager transactionManager,
-                      ItemReader<Person> itemReader, ItemProcessor<Person, Person> itemProcessor,
-                      ItemWriter<Person> itemWriter, TaskExecutor taskExecutor) {
+                      @Qualifier("personItemReader") ItemReader<Person> itemReader, ItemProcessor<Person, Person> itemProcessor,
+                      @Qualifier("personItemWriter") ItemWriter<Person> itemWriter, TaskExecutor taskExecutor) {
         return new StepBuilder("step1", jobRepository)
                 .<Person, Person>chunk(10, transactionManager)
                 .reader(itemReader)
@@ -68,13 +65,13 @@ public class HelloBatchConfiguration {
 
     @Bean
     public Step step2(JobRepository jobRepository, PlatformTransactionManager transactionManager,
-                          ItemReader<Person> dbReader, ItemProcessor<Person, Person> itemProcessor,
-                          ItemWriter<Person> fileWriter) {
+                      @Qualifier("personItemReader") ItemReader<Person> itemReader, ItemProcessor<Person, Person> itemProcessor,
+                      @Qualifier("personItemWriter") ItemWriter<Person> itemWriter) {
         return new StepBuilder("step2", jobRepository)
                 .<Person, Person>chunk(10, transactionManager)
-                .reader(dbReader)
+                .reader(itemReader)
                 .processor(itemProcessor)
-                .writer(fileWriter)
+                .writer(itemWriter)
                 .build();
     }
     
@@ -83,19 +80,11 @@ public class HelloBatchConfiguration {
         return new PersonItemReader();
     }
     
-    @Bean
-    public ItemProcessor<Person, Person> processor() {
-        return new PersonItemProcessor();
-    }
     
     @Bean
     public ItemWriter<Person> itemWriter(PersonRepository personRepository) {
         return new PersonItemWriter(personRepository);
     }
 
-    @Bean
-    public ItemWriter<Person> fileWriter(PersonRepository personRepository) {
-        // 或者其他实现
-        return new FileItemWriter(personRepository);
-    }
+    
 }
