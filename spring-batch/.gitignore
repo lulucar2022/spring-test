@@ -4,6 +4,13 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### 自定义忽略 ###
+#忽略所有.svn目录
+.svn/
+#忽略所有.idea目录
+.idea/
+
+
 ### STS ###
 .apt_generated
 .classpath
