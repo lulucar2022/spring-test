@@ -4,6 +4,7 @@ import cn.lulucar.springbatch.entity.Person;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -14,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2025/1/14 9:10
  * @description 对数据进行处理，小写转大写
  */
+@Component
 @Slf4j
 public class PersonItemProcessor implements ItemProcessor<Person, Person> {
     @Getter
@@ -25,7 +27,7 @@ public class PersonItemProcessor implements ItemProcessor<Person, Person> {
         log.info("Processing person: {} on thread: {}", person, Thread.currentThread().getName());
         // 模拟处理时发生异常：lastName为 Error时抛出异常
         if ("Error".equals(person.getLastName())) {
-            throw new RuntimeException("Invalid last name: " + person.getLastName());
+            log.warn("Name = {} {},发生异常",person.getFirstName(),person.getLastName());
         }
         
         person.setFirstName(person.getFirstName().toUpperCase());
