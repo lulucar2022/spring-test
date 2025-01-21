@@ -21,3 +21,6 @@ This project is a sample project for Spring Batch.
 - 多步骤任务：验证 step1 和 step2 是否按顺序执行。
 - 错误处理：验证跳过策略和重试机制是否生效。
 - 异步执行：验证任务是否异步执行。
+
+## 1.2
+多个 `csv` 文件读取，处理并写入到一个 `csv` 文件
