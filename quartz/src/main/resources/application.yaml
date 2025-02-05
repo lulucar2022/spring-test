@@ -1,13 +1,39 @@
 spring:
   application:
     name: quartz
-  
+  datasource:
+    url: jdbc:h2:mem:quartzdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 
+  h2:
+    console:
+      enabled: true
+  # 定时任务配置项
   quartz:
-    auto-startup: true
     properties:
       org:
         quartz:
+          scheduler:
+            instanceName: scheduler
+            instanceId: AUTO
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            tablePrefix: QRTZ_
+            isClustered: false
+            useProperties: false
           threadPool:
-            threadCount: 5
-    job-store-type: 
-      memory
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 10
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: embedded
+    
+logging:
+  level:
+    org.h2: debug
+    org.quartz: debug
+    org.springframework.jdbc: debug
