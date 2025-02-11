@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: redis-test
+    
+  data:
+    redis:
+      client-type: lettuce
+      host: 127.0.0.1
+      port: 6379
+      password: 88888888
+
+# 新增配置项
+redis:
+  limiter:
+    ip: default_ip
+    rate: 10
