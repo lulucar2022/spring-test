@@ -2,7 +2,6 @@ package cn.lulucar.quartz.service;
 
 import cn.lulucar.quartz.job.MyDynamicJob;
 import org.quartz.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +32,11 @@ public class JobService {
                 .withIdentity(triggerName, groupName)
                 .startNow()
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-                        .withRepeatCount(5)
+                        .repeatForever()
                         .withIntervalInSeconds(intervalInSeconds))
                 .build();
         
         scheduler.scheduleJob(jobDetail,trigger);
+        scheduler.start();
     }
 }

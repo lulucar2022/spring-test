@@ -1,11 +1,10 @@
 package cn.lulucar.quartz.job;
 
 import cn.lulucar.quartz.service.MyService;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Component;
 public class MyDynamicJob implements Job {
     @Resource
     private MyService myService;
-    
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         String param = jobExecutionContext.getMergedJobDataMap().getString("paramName");
