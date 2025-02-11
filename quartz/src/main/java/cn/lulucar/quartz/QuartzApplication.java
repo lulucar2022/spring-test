@@ -12,14 +12,18 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
  */
 @SpringBootApplication
 public class QuartzApplication implements CommandLineRunner {
-	@Autowired
-	private JobService jobService;
-	
+	private final JobService jobService;
+
+	public QuartzApplication(JobService jobService) {
+		this.jobService = jobService;
+	}
 
 	@Override
 	public void run(String... args) throws Exception {
 		// 初始化时调度一个作业作为示例
-		jobService.scheduleJob("exampleJob", "group1", "exampleTrigger", "paramName", "Hello, World!", 5);
+		jobService.scheduleJob("exampleJob", "group1",
+				"exampleTrigger", "paramName", 
+				"Hello, World!", 5);
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(QuartzApplication.class, args);

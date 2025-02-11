@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class MyDynamicJob implements Job {
-    @Autowired
+    @Resource
     private MyService myService;
     
     @Override

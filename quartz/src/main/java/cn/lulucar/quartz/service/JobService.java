@@ -14,9 +14,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class JobService {
-    @Autowired
-    private SchedulerFactoryBean schedulerFactoryBean;
-    
+    private final SchedulerFactoryBean schedulerFactoryBean;
+
+    public JobService(SchedulerFactoryBean schedulerFactoryBean) {
+        this.schedulerFactoryBean = schedulerFactoryBean;
+    }
+
     public void scheduleJob(String jobName, String groupName, String triggerName, String paramName, String paramValue, int intervalInSeconds) throws SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
 
