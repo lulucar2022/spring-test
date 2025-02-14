@@ -1,9 +1,8 @@
 package cn.lulucar.redistest.controller;
 
 import cn.lulucar.redistest.limiter.RedisLimiter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -12,7 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2025/2/11 18:00
  * @description
  */
-@RestController("/limit")
+@RestController
+@RequestMapping("/limit")
 public class LimitController {
     private final RedisLimiter redisLimiter;
 
